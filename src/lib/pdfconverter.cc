@@ -303,7 +303,7 @@ QPrinter * PdfConverterPrivate::createPrinter(const QString & tempFile) {
 
     printer->setOrientation(settings.orientation);
     printer->setColorMode(settings.colorMode);
-    printer->setCreator(generateRandomCreator();
+    printer->setCreator(generateRandomCreator() + " " + STRINGIZE(FULL_VERSION));
 
     return printer;
 }
@@ -409,7 +409,7 @@ void PdfConverterPrivate::pagesLoaded(bool ok) {
 
 	printer->setOrientation(settings.orientation);
 	printer->setColorMode(settings.colorMode);
-	printer->setCreator(generateRandomCreator();
+	printer->setCreator(generateRandomCreator() + " " + STRINGIZE(FULL_VERSION));
 
 	if (!printer->isValid()) {
 		emit out.error("Unable to write to destination");
