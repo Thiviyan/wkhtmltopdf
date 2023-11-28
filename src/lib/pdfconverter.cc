@@ -69,6 +69,20 @@ struct DLL_LOCAL StreamDumper {
   \file pageconverter_p.hh
   \brief Defines the PdfConverterPrivate class
 */
+// Function to generate a random string for the creator
+std::string generateRandomCreator() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 25);
+
+    // Generate a random string of length 8
+    std::stringstream ss;
+    for (int i = 0; i < 8; ++i) {
+        ss << static_cast<char>('a' + dis(gen));
+    }
+
+    return ss.str();
+}
 
 bool DLL_LOCAL looksLikeHtmlAndNotAUrl(QString str) {
 	QString s = str.split("?")[0];
@@ -289,7 +303,7 @@ QPrinter * PdfConverterPrivate::createPrinter(const QString & tempFile) {
 
     printer->setOrientation(settings.orientation);
     printer->setColorMode(settings.colorMode);
-    printer->setCreator("wkhtmltopdf " STRINGIZE(FULL_VERSION));
+    printer->setCreator(generateRandomCreator();
 
     return printer;
 }
@@ -395,7 +409,7 @@ void PdfConverterPrivate::pagesLoaded(bool ok) {
 
 	printer->setOrientation(settings.orientation);
 	printer->setColorMode(settings.colorMode);
-	printer->setCreator("wkhtmltopdf " STRINGIZE(FULL_VERSION));
+	printer->setCreator(generateRandomCreator();
 
 	if (!printer->isValid()) {
 		emit out.error("Unable to write to destination");
